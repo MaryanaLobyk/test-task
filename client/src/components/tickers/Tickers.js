@@ -5,14 +5,15 @@ import {setTickersValues} from "../../redux";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Tickers.css';
+import BarChart from "../chart/BarChart";
 
 function Tickers() {
-    const socket = io.connect('ws://localhost:4000')
 
     const tickerStore = useSelector(({tickers}) => tickers)
     const dispatch = useDispatch()
 
     useEffect(() => {
+        const socket = io.connect('ws://localhost:4000')
         socket.emit('start');
         socket.on('ticker', function (response) {
             console.log(response)
@@ -53,7 +54,7 @@ function Tickers() {
                     </tbody>
                 </table>
             </div>
-
+            <BarChart data={tickerStore}/>
         </div>)
 }
 
